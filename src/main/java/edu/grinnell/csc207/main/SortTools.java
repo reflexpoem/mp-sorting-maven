@@ -2,53 +2,37 @@ package edu.grinnell.csc207.main;
 
 import edu.grinnell.csc207.sorting.Sorter;
 import edu.grinnell.csc207.util.SimpleTimer;
-
+import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
 
-import java.io.PrintWriter;
-
-import java.lang.reflect.Constructor;
-
-/**
- * Tools for exploring sorting implementations.
- */
+/** Tools for exploring sorting implementations. */
 public class SortTools {
   // +-----------+---------------------------------------------------
   // | Constants |
   // +-----------+
 
-  /**
-   * What is long enough for the basic test?
-   */
+  /** What is long enough for the basic test? */
   static final long MIN_USEFUL_TIME = 300;
 
-  /**
-   * What is too long for the basic test? (unused)
-   */
+  /** What is too long for the basic test? (unused) */
   static final long MAX_USEFUL_TIME = 2000;
 
-  /**
-   * The number of rounds in the competition.
-   */
+  /** The number of rounds in the competition. */
   static final long ROUNDS = 10;
 
   // +--------+------------------------------------------------------
   // | Fields |
   // +--------+
 
-  /**
-   * Our random number generator.
-   */
+  /** Our random number generator. */
   static Random rand;
 
-  /**
-   * Prefixes for our sorters.
-   */
+  /** Prefixes for our sorters. */
   static final String[] PREFIXES =
-      new String[] {"", "edu.grinnell.csc207.sorting.",
-          "edu.grinnell.csc207.util."};
+      new String[] {"", "edu.grinnell.csc207.sorting.", "edu.grinnell.csc207.util."};
 
   // +------+--------------------------------------------------------
   // | Main |
@@ -57,8 +41,7 @@ public class SortTools {
   /**
    * Run the program.
    *
-   * @param args
-   *   Command-line arguments. See the help document for details.
+   * @param args Command-line arguments. See the help document for details.
    */
   public static void main(String[] args) {
     rand = new Random();
@@ -117,11 +100,8 @@ public class SortTools {
   /**
    * Test a sorter on a series of random arrays.
    *
-   * @param s
-   *   The sorter to test.
-   * @param pen
-   *   Where to print messages.
-   *
+   * @param s The sorter to test.
+   * @param pen Where to print messages.
    * @return true if the tests pass and false otherwise.
    */
   static boolean test(Sorter s, PrintWriter pen) {
@@ -159,7 +139,7 @@ public class SortTools {
 
     // Array of identical values.
     int size = 70;
-    // if (pen != null) { pen.println("  Sorting identical array."); } 
+    // if (pen != null) { pen.println("  Sorting identical array."); }
     strings = new String[size];
     for (int i = 0; i < 70; i++) {
       strings[i] = "eh";
@@ -229,17 +209,13 @@ public class SortTools {
   } // test(Sorter, PrintWriter)
 
   /**
-   * Time a sorter on a series of random arrays until it takes
-   * more than MIN_USEFUL_TIME milliseconds.
+   * Time a sorter on a series of random arrays until it takes more than MIN_USEFUL_TIME
+   * milliseconds.
    *
-   * @param s
-   *   The sorter we're testing.
-   * @param pen
-   *   A printwriter to indicate information about timing. Set
-   *   to null if you don't want information.
-   *
-   * @return
-   *   The first array size that takes more than MIN_USEFUL_TIME
+   * @param s The sorter we're testing.
+   * @param pen A printwriter to indicate information about timing. Set to null if you don't want
+   *     information.
+   * @return The first array size that takes more than MIN_USEFUL_TIME
    */
   static int time(Sorter s, PrintWriter pen) {
     long time = 0;
@@ -269,12 +245,8 @@ public class SortTools {
   /**
    * Compare a bunch of sorters.
    *
-   * @param sorters
-   *   The sorters to compare.
-   * @param pen
-   *   Where extra output should go. Set to null if you don't
-   *   want output.
-   *
+   * @param sorters The sorters to compare.
+   * @param pen Where extra output should go. Set to null if you don't want output.
    * @return The winning sorter.
    */
   static Sorter compete(Sorter[] sorters, PrintWriter pen) {
@@ -399,22 +371,17 @@ public class SortTools {
   // | Utilities |
   // +-----------+
 
-  /**
-   * Print the help message.
-   */
+  /** Print the help message. */
   static void help() {
     System.err.println("Usage: java SortTools COMMAND SortClass1 ... SortClassn");
     System.err.println("  Commands: time, test, compete\n");
   } // help()
 
   /**
-   * Get the sorter for a particular class name.  Yay introspection!
+   * Get the sorter for a particular class name. Yay introspection!
    *
-   * @param name
-   *   The class name of the sorter.
-   *
-   * @return The corresponding sorter. Returns `null` if no sorter
-   *   can be found.
+   * @param name The class name of the sorter.
+   * @return The corresponding sorter. Returns `null` if no sorter can be found.
    */
   static Sorter<Comparable> getSorter(String name) {
     Class<?> sclass = null;
@@ -436,8 +403,7 @@ public class SortTools {
     Constructor<Sorter> construct = null;
     try {
       construct =
-          (Constructor<Sorter>) sclass.getConstructor(
-              Class.forName("java.util.Comparator"));
+          (Constructor<Sorter>) sclass.getConstructor(Class.forName("java.util.Comparator"));
     } catch (Exception e) {
       System.err.println("Cannot find constructor for " + name);
       System.err.println("  " + e.toString());
@@ -453,12 +419,9 @@ public class SortTools {
   } // getSorter(String)
 
   /**
-   * Create an array of a particular size in which the values are
-   * in order.
+   * Create an array of a particular size in which the values are in order.
    *
-   * @param size
-   *   The desired size of the result array.
-   *
+   * @param size The desired size of the result array.
    * @return the array
    */
   static Integer[] sampleSortedArray(int size) {
@@ -473,13 +436,11 @@ public class SortTools {
   /**
    * Permute an array.
    *
-   * I recall a colleague telling me that this is not a great way to
-   * permute an array.  But I also recall an article by Knuth suggesting
-   * that this does randomly arrange things.  In any case, it's good
-   * enough for our purposes.
+   * <p>I recall a colleague telling me that this is not a great way to permute an array. But I also
+   * recall an article by Knuth suggesting that this does randomly arrange things. In any case, it's
+   * good enough for our purposes.
    *
-   * @param arr
-   *   The array to permute.
+   * @param arr The array to permute.
    */
   static void permute(Object[] arr) {
     for (int i = 0; i < arr.length; i++) {
@@ -490,13 +451,10 @@ public class SortTools {
   /**
    * Permute an array by swapping n random pairs.
    *
-   * Or perhaps this is the one that's less correct, even if
-   * n is arr.length.
+   * <p>Or perhaps this is the one that's less correct, even if n is arr.length.
    *
-   * @param arr
-   *   The array to permute.
-   * @param n
-   *   The number of pairs to swap.
+   * @param arr The array to permute.
+   * @param n The number of pairs to swap.
    */
   static void permute(Object[] arr, int n) {
     for (int i = 0; i < n; i++) {
@@ -507,8 +465,7 @@ public class SortTools {
   /**
    * Reverse an array.
    *
-   * @param arr
-   *   The array to reverse.
+   * @param arr The array to reverse.
    */
   static void reverse(Object[] arr) {
     int lo = 0;
@@ -521,17 +478,13 @@ public class SortTools {
   /**
    * Swap two values in an array.
    *
-   * @param arr
-   *   The array.
-   * @param i
-   *   The index of one value.
-   * @param j
-   *   The index of another value.
+   * @param arr The array.
+   * @param i The index of one value.
+   * @param j The index of another value.
    */
   static void swap(Object[] arr, int i, int j) {
     Object tmp = arr[i];
     arr[i] = arr[j];
     arr[j] = tmp;
   } // swap(Object[], int, int)
-
 } // class SortTools

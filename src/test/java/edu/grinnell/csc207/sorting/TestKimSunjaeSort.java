@@ -3,7 +3,7 @@ package edu.grinnell.csc207.sorting;
 import org.junit.jupiter.api.BeforeAll;
 
 /** Tests of our InsertionSorter. */
-public class TestInsertionSorter extends TestSorter {
+public class TestKimSunjaeSort extends TestSorter {
   /** Set up the sorters. */
   @BeforeAll
   static void setup() {
